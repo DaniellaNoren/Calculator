@@ -22,6 +22,7 @@ namespace Calculator
             Console.WriteLine("2. Subtract");
             Console.WriteLine("3. Multiplication");
             Console.WriteLine("4. Division");
+            Console.WriteLine("5. Exponentiation");
             Console.WriteLine("9. Exit");
         }
 
@@ -33,6 +34,7 @@ namespace Calculator
                 case 2: Subtraction(); break;
                 case 3: Multiplication(); break;
                 case 4: Division(); break;
+                case 5: Exponentiation(); break;    
                 case 9: break;
                 default: Console.WriteLine("Invalid choice."); break;
             }
@@ -107,6 +109,35 @@ namespace Calculator
         public static double DivideTwoNumbers(double a, double b)
         {
             return a / b;
+        }
+
+        public static void Exponentiation()
+        {
+            var numbers = GetTwoNumbers();
+            var power = NumberToThePowerOf(numbers[0], numbers[1]);
+
+            Console.WriteLine("{0}^{1} = {2}", numbers[0], numbers[1], power);
+        }
+
+        public static double NumberToThePowerOf(double a, double b)
+        {
+            double power = 1;
+            double positiveExponent;
+
+            if (b >= 0)
+                positiveExponent = b;
+            else
+                positiveExponent = b * -1;
+
+            for (int i = 0; i < positiveExponent; i++)
+            {
+                power *= a;
+            }
+
+            if (b < 0)
+                power = DivideTwoNumbers(1, power);
+
+            return power;
         }
     }
 }
