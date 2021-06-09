@@ -41,7 +41,6 @@ namespace Calculator
         static double GetNumberFromUser()
         {
             Double.TryParse(Console.ReadLine().Replace(".", ","), out double choice);
-            Console.WriteLine(choice);
             return choice;
         }
 
@@ -101,7 +100,6 @@ namespace Calculator
             }
             
             double product = DivideTwoNumbers(numbers[0], numbers[1]);
-
 
             Console.WriteLine("{0} / {1} = {2}", numbers[0], numbers[1], product);
         }
