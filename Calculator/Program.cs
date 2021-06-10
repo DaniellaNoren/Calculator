@@ -42,8 +42,19 @@ namespace Calculator
 
         static double GetNumberFromUser()
         {
-            Double.TryParse(Console.ReadLine().Replace(".", ","), out double choice);
-            return choice;
+            bool correctInput = false;
+            double number = 0;
+
+            while (!correctInput)
+            {
+                correctInput = Double.TryParse(Console.ReadLine().Replace(".", ","), out number);
+                if (!correctInput)
+                {
+                    Console.WriteLine("Invalid number! Try again: ");
+                }
+            }
+
+            return number;
         }
 
         public static double[] GetTwoNumbers()
@@ -97,7 +108,7 @@ namespace Calculator
 
             while(numbers[1] == 0)
             {
-                Console.WriteLine("Cannot divide by zero");
+                Console.WriteLine("Cannot divide by zero, enter another number: ");
                 numbers[1] = GetNumberFromUser();
             }
             
