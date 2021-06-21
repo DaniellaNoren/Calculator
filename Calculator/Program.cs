@@ -67,40 +67,30 @@ namespace Calculator
         public static void Addition()
         {
             var numbers = GetTwoNumbers();
-            double sum = AddTwoNumbers(numbers[0], numbers[1]);
+            double sum = Calculator.Add(numbers[0], numbers[1]);
      
             Console.WriteLine("{0} + {1} = {2}", numbers[0], numbers[1], sum);
         }
 
-        public static double AddTwoNumbers(double a, double b)
-        {
-            return a + b;
-        }
+      
 
         public static void Subtraction()
         {
             var numbers = GetTwoNumbers();
-            double difference = SubtractNumbers(numbers[0], numbers[1]);
+            double difference = Calculator.Subtract(numbers[0], numbers[1]);
 
             Console.WriteLine("{0} - {1} = {2}", numbers[0], numbers[1], difference);
         }
-        public static double SubtractNumbers(double a, double b)
-        {
-            return a - b;
-        }
+     
 
         public static void Multiplication()
         {
             var numbers = GetTwoNumbers();
-            double product = MultiplyNumbers(numbers[0], numbers[1]);
+            double product = Calculator.Multiply(numbers[0], numbers[1]);
 
             Console.WriteLine("{0} * {1} = {2}", numbers[0], numbers[1], product);
         }
 
-        public static double MultiplyNumbers(double a, double b)
-        {
-            return a * b;
-        }
 
         public static void Division()
         {
@@ -112,43 +102,21 @@ namespace Calculator
                 numbers[1] = GetNumberFromUser();
             }
             
-            double product = DivideTwoNumbers(numbers[0], numbers[1]);
+            double product = Calculator.Divide(numbers[0], numbers[1]);
 
             Console.WriteLine("{0} / {1} = {2}", numbers[0], numbers[1], product);
         }
 
-        public static double DivideTwoNumbers(double a, double b)
-        {
-            return a / b;
-        }
+       
 
         public static void Exponentiation()
         {
             var numbers = GetTwoNumbers();
-            var power = NumberToThePowerOf(numbers[0], numbers[1]);
+            var power = Calculator.ThePowerOf(numbers[0], numbers[1]);
 
             Console.WriteLine("{0}^{1} = {2}", numbers[0], numbers[1], power);
         }
 
-        public static double NumberToThePowerOf(double a, double b)
-        {
-            double power = 1;
-            double positiveExponent;
-
-            if (b >= 0)
-                positiveExponent = b;
-            else
-                positiveExponent = b * -1;
-
-            for (int i = 0; i < positiveExponent; i++)
-            {
-                power *= a;
-            }
-
-            if (b < 0)
-                power = DivideTwoNumbers(1, power);
-
-            return power;
-        }
+      
     }
 }
