@@ -65,7 +65,7 @@ namespace Calculator
 
             for (int i = 1; i < numberArray.Length; i++)
             {
-                product *= numberArray[i];
+                product /= numberArray[i];
             }
 
             return product;
@@ -95,6 +95,19 @@ namespace Calculator
                 power = Divide(1, power);
 
             return power;
+        }
+
+        public static double ThePowerOf(double[] numbers)
+        {
+            double exponentSum = numbers[1];
+
+            for (int i = 2; i < numbers.Length; i++)
+            {
+                exponentSum *= numbers[i];
+            }
+
+            return ThePowerOf(numbers[0], exponentSum);
+
         }
     }
 }
