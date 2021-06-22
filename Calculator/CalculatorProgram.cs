@@ -16,22 +16,39 @@ namespace Calculator
             CalculatorProgram Program = new CalculatorProgram();
 
             Program.StartProgram();
+
+            InputAndOutputHandler.HandleOutput("Goodbye!");
         }
 
         public void StartProgram()
         {
-            int choice;
+            int choice = 0;
+            bool tryAgain = true;
 
             do
             {
                PrintMenu();
-               choice = (int)InputAndOutputHandler.GetNumberFromString(GetUserInput());
+
+                while (tryAgain) {
+
+                    try
+                    {
+                        choice = (int) InputAndOutputHandler.GetNumberFromString(GetUserInput());
+                        tryAgain = false;
+                    }
+                    catch (InvalidInputException e)
+                    {
+                        InputAndOutputHandler.HandleOutput(e.Message);
+                    }
+
+                }
+    
                ChooseMenuOption(choice);
 
             } while (choice != 9);
 
-            InputAndOutputHandler.HandleOutput("Goodbye!");
         }
+
         public void PrintMenu()
         {
             string menu = "1. Add\n" +
@@ -51,8 +68,7 @@ namespace Calculator
 
         public void ChooseMenuOption(int choice)
         {
-            try
-            {
+            
                 switch (choice)
                 {
                     case 1: Addition(); break;
@@ -62,12 +78,7 @@ namespace Calculator
                     case 5: Exponentiation(); break;
                     case 9: break;
                     default: InputAndOutputHandler.HandleOutput("Invalid input, try again: "); break;
-                }
-            }
-            catch (InvalidInputException e)
-            {
-                InputAndOutputHandler.HandleOutput(e.Message);
-            }
+                }   
 
         }
 

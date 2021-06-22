@@ -9,7 +9,7 @@ namespace Calculator
     {
         public string GetUserInput()
         {
-            return Console.ReadLine().Trim();
+            return Console.ReadLine().Trim().Replace('.', ',');
         }
 
         public void HandleOutput(string outputString)
@@ -19,7 +19,9 @@ namespace Calculator
 
         public List<double> GetNumbersFromUser()
         {
-            HandleOutput("Insert numbers, press S to stop: ");
+            string keyToStop = "S";
+
+            HandleOutput($"Insert numbers, enter {keyToStop} to stop: ");
 
             string input;
             List<double> numbers = new List<double>();
@@ -28,7 +30,7 @@ namespace Calculator
             {
                 input = GetUserInput();
 
-                if ("S".Equals(input)) return numbers;
+                if (keyToStop.Equals(input)) return numbers;
 
                 TryToAddNumber(ref numbers, input);
                 
@@ -56,27 +58,23 @@ namespace Calculator
         public double GetNumberFromString(string stringToParse)
         {
             double number;
-
-            try
+           
+            bool validInput = InputIsValidNumber(stringToParse);
+            
+            if (!validInput)
             {
-                InputIsValidNumber(stringToParse);
-                number = Double.Parse(stringToParse);
+                throw new InvalidInputException("Input is not a valid number");
+            }
 
-            }
-            catch (InvalidInputException e)
-            {
-                throw e;
-            }
+            number = Double.Parse(stringToParse);
 
             return number;
         }
 
         public bool InputIsValidNumber(string input)
         {
-            if (Regex.IsMatch(input, @"^\d+(?:,\d+)?$"))
-                return true;
-            else
-                throw new InvalidInputException("Input is not a valid number"); 
+            return Regex.IsMatch(input, @"^\d+(?:,\d+)?$");
+                
         }
 
     }
