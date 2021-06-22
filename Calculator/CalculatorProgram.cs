@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Calculator
 {
@@ -16,8 +15,6 @@ namespace Calculator
             CalculatorProgram Program = new CalculatorProgram();
 
             Program.StartProgram();
-
-            InputAndOutputHandler.HandleOutput("Goodbye!");
         }
 
         public void StartProgram()
@@ -44,8 +41,11 @@ namespace Calculator
                 }
     
                ChooseMenuOption(choice);
+               tryAgain = true;
 
             } while (choice != 9);
+
+            InputAndOutputHandler.HandleOutput("Goodbye!");
 
         }
 
@@ -86,9 +86,9 @@ namespace Calculator
         {
             List<double> numbers = InputAndOutputHandler.GetNumbersFromUser();
 
-            if (numbers.Count < 2)
+            if (numbers.Count == 0)
             {
-                throw new InvalidInputException("Calculation need at least two numbers");
+                throw new NoInputException("No numbers entered");
             }
 
             return numbers.ToArray();
@@ -98,7 +98,14 @@ namespace Calculator
         {
             double[] numbers;
 
-            numbers = GetNumbers();
+            try
+            {
+                numbers = GetNumbers();
+            }
+            catch (NoInputException)
+            {
+                return;
+            }
 
             double sum = Calculator.Add(numbers);
 
@@ -110,7 +117,14 @@ namespace Calculator
         {
             double[] numbers;
 
-            numbers = GetNumbers();
+            try
+            {
+                numbers = GetNumbers();
+            }
+            catch (NoInputException)
+            {
+                return;
+            }
 
             double difference = Calculator.Subtract(numbers);
 
@@ -121,7 +135,14 @@ namespace Calculator
         {
             double[] numbers;
 
-            numbers = GetNumbers();
+            try
+            {
+                numbers = GetNumbers();
+            }
+            catch (NoInputException)
+            {
+                return;
+            }
 
             double product = Calculator.Multiply(numbers);
 
@@ -132,7 +153,14 @@ namespace Calculator
         {
             double[] numbers;
 
-            numbers = GetNumbers();
+            try
+            {
+                numbers = GetNumbers();
+            }
+            catch (NoInputException)
+            {
+                return;
+            }
 
             if (ArrayContainsZero(numbers, 1))
             {
@@ -157,10 +185,28 @@ namespace Calculator
 
         public void Exponentiation()
         {
-            double[] numbers;
-
-            numbers = GetNumbers();
+            double[] numbers = new double[0];
+            bool validInput = false;
             double power;
+
+            while (!validInput)
+            {
+                try
+                {
+                    numbers = GetNumbers();
+                    validInput = true;
+                }
+                catch (NoInputException)
+                {
+                    return;
+                }
+
+                if (numbers.Length == 1)
+                {
+                    InputAndOutputHandler.HandleOutput("Need at least two numbers, try again");
+                }
+                
+            }
 
             if (numbers.Length > 2)
                 power = Calculator.ThePowerOf(numbers);
@@ -186,8 +232,10 @@ namespace Calculator
             return StringBuilder.ToString();
         }
 
-
-
-
     }
+
+        public class NoInputException : Exception
+        {
+            public NoInputException(string message) : base(message) { }
+        }
 }
