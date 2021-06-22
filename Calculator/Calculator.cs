@@ -61,10 +61,14 @@ namespace Calculator
 
         public static double Divide(double[] numberArray)
         {
+           
             double product = numberArray[0];
 
             for (int i = 1; i < numberArray.Length; i++)
             {
+                if (numberArray[i] == 0)
+                    throw new DivideByZeroException("Cannot divide by zero");
+
                 product /= numberArray[i];
             }
 
@@ -73,11 +77,17 @@ namespace Calculator
 
         public static double Divide(double a, double b)
         {
+            if (b == 0)
+                throw new DivideByZeroException("Cannot divide by zero");
+
             return a / b;
         }
 
         public static double ThePowerOf(double a, double b)
         {
+            if (NumberIsADecimal(b))
+                return Math.Pow(a, b);
+
             double power = 1;
             double positiveExponent;
 
@@ -86,10 +96,13 @@ namespace Calculator
             else
                 positiveExponent = b * -1;
 
-            for (int i = 0; i < positiveExponent; i++)
-            {
-                power *= a;
-            }
+                for (double i = 0; i < positiveExponent; i++)
+                {
+                    power *= a;
+                }
+            
+         
+           
 
             if (b < 0)
                 power = Divide(1, power);
@@ -97,9 +110,20 @@ namespace Calculator
             return power;
         }
 
+        public static bool NumberIsADecimal(double nr)
+        {
+            if (nr < 1 && nr > -1)
+                return true;
+
+            return (double) nr % (int)nr > 0;
+        }
+
         public static double ThePowerOf(double[] numbers)
         {
-            double exponentSum = numbers[1];
+            double exponentSum = 0;
+
+            if (numbers.Length > 1)
+                exponentSum = numbers[1];
 
             for (int i = 2; i < numbers.Length; i++)
             {
