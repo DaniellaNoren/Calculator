@@ -19,30 +19,15 @@ namespace Calculator
 
         public void StartProgram()
         {
-            int choice = 0;
-            bool tryAgain = true;
+            int choice;
 
             do
             {
                PrintMenu();
-
-                while (tryAgain) {
-
-                    try
-                    {
-                        choice = (int) InputAndOutputHandler.GetNumberFromString(GetUserInput());
-                        tryAgain = false;
-                    }
-                    catch (InvalidInputException e)
-                    {
-                        InputAndOutputHandler.HandleOutput(e.Message);
-                    }
-
-                }
-    
+               choice = InputAndOutputHandler.GetNumberFromUser(); 
+               
                ChooseMenuOption(choice);
-               tryAgain = true;
-
+              
             } while (choice != 9);
 
             InputAndOutputHandler.HandleOutput("Goodbye!");
@@ -59,11 +44,6 @@ namespace Calculator
                           "9. Exit";
 
             InputAndOutputHandler.HandleOutput(menu);
-        }
-
-        public string GetUserInput()
-        {
-            return InputAndOutputHandler.GetUserInput();
         }
 
         public void ChooseMenuOption(int choice)
@@ -84,6 +64,8 @@ namespace Calculator
 
         public double[] GetNumbers()
         {
+            InputAndOutputHandler.HandleOutput($"Insert numbers, enter S to stop: ");
+
             List<double> numbers = InputAndOutputHandler.GetNumbersFromUser();
 
             if (numbers.Count == 0)
@@ -231,6 +213,8 @@ namespace Calculator
 
             return StringBuilder.ToString();
         }
+
+
 
     }
 

@@ -9,7 +9,7 @@ namespace Calculator
     {
         public string GetUserInput()
         {
-            return Console.ReadLine().Trim().Replace('.', ',');
+            return Console.ReadLine();
         }
 
         public void HandleOutput(string outputString)
@@ -17,12 +17,31 @@ namespace Calculator
             Console.WriteLine(outputString);
         }
 
-        public List<double> GetNumbersFromUser()
+        public int GetNumberFromUser()
         {
-            string keyToStop = "S";
+            int nr = 0;
+            bool tryAgain = true;
 
-            HandleOutput($"Insert numbers, enter {keyToStop} to stop: ");
+            while (tryAgain)
+            {
 
+                try
+                {
+                    nr = (int) GetNumberFromString(GetUserInput().Trim());
+                    tryAgain = false;
+                }
+                catch (InvalidInputException e)
+                {
+                    HandleOutput(e.Message);
+                }
+
+            }
+
+            return nr;
+        }
+
+        public List<double> GetNumbersFromUser(string keyToStop = "S")
+        {
             string input;
             List<double> numbers = new List<double>();
 
@@ -32,7 +51,7 @@ namespace Calculator
 
                 if (keyToStop.Equals(input)) return numbers;
 
-                TryToAddNumber(ref numbers, input);
+                TryToAddNumber(ref numbers, input.Replace('.', ','));
                 
             }
         }
@@ -45,9 +64,8 @@ namespace Calculator
                 double nr = GetNumberFromString(nrString);
                 nrList.Add(nr);
             }
-            catch (InvalidInputException e)
+            catch (InvalidInputException)
             {
-                HandleOutput(e.Message);
                 return false;
             }
 
