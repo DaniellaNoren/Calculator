@@ -64,16 +64,16 @@ namespace Calculator
 
         public double[] GetNumbers()
         {
-            InputAndOutputHandler.HandleOutput($"Insert numbers, enter S to stop: ");
+            InputAndOutputHandler.HandleOutput($"Insert numbers, seperated by space: ");
 
-            List<double> numbers = InputAndOutputHandler.GetNumbersFromUser();
+            double[] numbers = InputAndOutputHandler.GetNumbersFromUser();
 
-            if (numbers.Count == 0)
+            if (numbers.Length == 0)
             {
                 throw new NoInputException("No numbers entered");
             }
 
-            return numbers.ToArray();
+            return numbers;
         }
 
         public void Addition()

@@ -40,37 +40,41 @@ namespace Calculator
             return nr;
         }
 
-        public List<double> GetNumbersFromUser(string keyToStop = "S")
+        public double[] GetNumbersFromUser()
         {
-            string input;
-            List<double> numbers = new List<double>();
+            string input = GetUserInput();
+            string[] stringNumbers = input.Split(" ");
+            double[] numbers = GetDoubleArrayFromStringArray(stringNumbers);
 
-            while (true)
-            {
-                input = GetUserInput();
-
-                if (keyToStop.Equals(input)) return numbers;
-
-                TryToAddNumber(ref numbers, input.Replace('.', ','));
-                
-            }
+            return numbers;
         }
 
-
-        private bool TryToAddNumber(ref List<double> nrList, string nrString)
+        public double[] GetDoubleArrayFromStringArray(string[] array)
         {
-            try
+
+            int arrLength = array.Length;
+            int arrLengthCopy = arrLength;
+            double[] numbers = new double[arrLength];
+            int numbersIndex = 0;
+
+            for (int i = 0; i < arrLength; i++)
             {
-                double nr = GetNumberFromString(nrString);
-                nrList.Add(nr);
-            }
-            catch (InvalidInputException)
-            {
-                return false;
+                double nr;
+                try
+                {
+                   nr = GetNumberFromString(array[i].Trim().Replace(".", ","));
+                   numbers[numbersIndex] = nr;
+                   numbersIndex++;
+                }
+                catch (InvalidInputException)
+                {
+                    arrLengthCopy--;
+                    Array.Resize(ref numbers, arrLengthCopy);
+                    continue;
+                }
             }
 
-            return true;
-
+            return numbers;
         }
 
         public double GetNumberFromString(string stringToParse)
