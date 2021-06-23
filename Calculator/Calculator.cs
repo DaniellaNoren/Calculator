@@ -99,9 +99,6 @@ namespace Calculator
                     power *= a;
                 }
             
-         
-           
-
             if (b < 0)
                 power = Divide(1, power);
 

@@ -96,13 +96,5 @@ namespace Calculator
             return Regex.IsMatch(input, @"^\d+(?:,\d+)?$");
                 
         }
-
     }
-
-    public class InvalidInputException : Exception
-    {
-        public InvalidInputException(string message) : base(message) { }
-    }
-
-
 }

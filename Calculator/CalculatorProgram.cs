@@ -22,11 +22,11 @@ namespace Calculator
 
             do
             {
-               PrintMenu();
-               choice = InputAndOutputHandler.GetNumberFromUser(); 
-               
-               ChooseMenuOption(choice);
-              
+                PrintMenu();
+                choice = InputAndOutputHandler.GetNumberFromUser();
+
+                ChooseMenuOption(choice);
+
             } while (choice != 9);
 
             InputAndOutputHandler.HandleOutput("Goodbye!");
@@ -47,18 +47,16 @@ namespace Calculator
 
         public void ChooseMenuOption(int choice)
         {
-            
-                switch (choice)
-                {
-                    case 1: Addition(); break;
-                    case 2: Subtraction(); break;
-                    case 3: Multiplication(); break;
-                    case 4: Division(); break;
-                    case 5: Exponentiation(); break;
-                    case 9: break;
-                    default: InputAndOutputHandler.HandleOutput("Invalid input, try again: "); break;
-                }   
-
+            switch (choice)
+            {
+                case 1: Addition(); break;
+                case 2: Subtraction(); break;
+                case 3: Multiplication(); break;
+                case 4: Division(); break;
+                case 5: Exponentiation(); break;
+                case 9: break;
+                default: InputAndOutputHandler.HandleOutput("Invalid input, try again: "); break;
+            }
         }
 
         public double[] GetNumbers()
@@ -156,7 +154,7 @@ namespace Calculator
 
         private bool ArrayContainsZero(double[] nrs, int startIndex)
         {
-            for(int i = startIndex; i < nrs.Length; i++)
+            for (int i = startIndex; i < nrs.Length; i++)
             {
                 if (nrs[i] == 0) return true;
             }
@@ -186,7 +184,7 @@ namespace Calculator
                 {
                     InputAndOutputHandler.HandleOutput("Need at least two numbers, try again");
                 }
-                
+
             }
 
             if (numbers.Length > 2)
@@ -213,12 +211,15 @@ namespace Calculator
             return StringBuilder.ToString();
         }
 
-
-
     }
 
-        public class NoInputException : Exception
-        {
-            public NoInputException(string message) : base(message) { }
-        }
+    public class NoInputException : Exception
+    {
+        public NoInputException(string message) : base(message) { }
+    }
+
+    public class InvalidInputException : Exception
+    {
+        public InvalidInputException(string message) : base(message) { }
+    }
 }
