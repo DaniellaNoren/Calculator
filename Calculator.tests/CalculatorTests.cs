@@ -1,20 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace Calculator.tests
 {
     public class CalculatorTests
     {
-        private readonly ITestOutputHelper Output;
-
-        public CalculatorTests(ITestOutputHelper Output)
-        {
-            this.Output = Output;
-        }
 
         [Theory]
         [MemberData(nameof(CalculatorClassData.TwoDoublesTestData), MemberType = typeof(CalculatorClassData))]
