@@ -93,7 +93,7 @@ namespace Calculator
 
         public bool InputIsValidNumber(string input)
         {
-            return Regex.IsMatch(input, @"^\d+(?:,\d+)?$");
+            return Regex.IsMatch(input, @"^-*\d+(?:,\d+)?$");
                 
         }
     }
